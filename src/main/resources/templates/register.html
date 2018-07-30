@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="Registration"></title>
+
+    <link rel="stylesheet" href="webjars/bootstrap/4.1.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="webjars/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css">
+    <script src="/webjars/jquery/3.0.0/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/4.1.2/js/bootstrap.min.js"></script>
+    <script src="/webjars/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="/webjars/jquery-validation/1.17.0/jquery.validate.min.js"></script>
+    <script src="/static/cleavejs/cleave.js" th:src="@{/cleavejs/cleave.min.js}"></script>
+</head>
+<body>
+<div class="container">
+    <form name="registration" class="form-narrow form-horizontal" method="post" th:action="@{/register}" th:object="${registrationForm}">
+        <th:block th:if="${#fields.hasGlobalErrors()}">
+            <div class="alert alert-danger alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p th:each="error : ${#fields.globalErrors()}" th:text="${error}"></p>
+            </div>
+        </th:block>
+        <fieldset>
+            <legend>Please Sign Up</legend>
+            <div class="form-group" th:classappend="${#fields.hasErrors('email')}? 'has-error'">
+                <label for="email" class="col-lg-4 control-label">E-mail</label>
+                <div class="col-lg-8">
+                    <input type="text" class="form-control" id="email" placeholder="Email address" th:field="*{email}"/>
+                    <span class="help-block" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Incorrect email</span>
+                </div>
+            </div>
+            <div class="form-group" th:classappend="${#fields.hasErrors('username')}? 'has-error'">
+                <label for="username" class="col-lg-4 control-label">Username</label>
+                <div class="col-lg-8">
+                    <input type="text" class="form-control" id="username" placeholder="Username" th:field="*{username}"/>
+                    <span class="help-block" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Incorrect username</span>
+                </div>
+            </div>
+            <div class="form-group" th:classappend="${#fields.hasErrors('password')}? 'has-error'">
+                <label for="password" class="col-lg-4 control-label">Password</label>
+                <div class="col-lg-8">
+                    <input type="password" class="form-control" id="password" placeholder="Password" th:field="*{password}"/>
+                    <span class="help-block" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Incorrect password</span>
+                </div>
+            </div>
+            <div class="form-group" th:classappend="${#fields.hasErrors('passwordRepeated')}? 'has-error'">
+                <label for="passwordRepeated" class="col-lg-4 control-label">Password Again</label>
+                <div class="col-lg-8">
+                    <input type="password" class="form-control" id="passwordRepeated" placeholder="Password Again" th:field="*{passwordRepeated}"/>
+                    <span class="help-block" th:if="${#fields.hasErrors('passwordRepeated')}" th:errors="*{passwordRepeated}">Incorrect password</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="firstName" class="col-lg-4 control-label">First Name</label>
+                <div class="col-lg-8">
+                    <input type="text" class="form-control" id="firstName" placeholder="First Name" th:field="*{firstName}"/>
+                    <span class="help-block" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">Incorrect firstName</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="lastName" class="col-lg-4 control-label">Last Name</label>
+                <div class="col-lg-8">
+                    <input type="text" class="form-control" id="lastName" placeholder="Last Name" th:field="*{lastName}"/>
+                    <span class="help-block" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Incorrect lastName</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="dateOfBirth" class="col-lg-4 control-label">Date of Birth</label>
+                <div class="col-lg-8">
+                    <input type="text" class="form-control datepicker" id="dateOfBirth" placeholder="Date of Birth" th:field="*{dateOfBirth}"/>
+                    <span class=" help-block" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}">Incorrect dateOfBirth</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-lg-offset-4 col-lg-8">
+                    <button type="submit" class="btn btn-default">Sign up</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-offset-4 col-lg-8">
+                    <p>Already have an account? <a href="login" th:href="@{/login}">Sign In</a></p>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+<script>
+    $('.datepicker').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true
+    });
+
+    new Cleave('#dateOfBirth', {
+        date: true,
+        datePattern: ['d', 'm', 'Y']
+    });
+
+    $(function () {
+        // Initialize form validation on the registration form.
+        // It has the name attribute "registration"
+        $("form[name='registration']").validate({
+            // Specify validation rules
+            rules: {
+                username: {
+                    minlength: 3,
+                    maxlength: 20
+                },
+                firstname: {
+                    minlength: 3,
+                    maxlength: 20
+                },
+                lastname: {
+                    minlength: 3,
+                    maxlength: 20
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                password: {
+                    required: true,
+                    pwcheck: true
+                },
+                passwordRepeated: {
+                    equalTo: "#password"
+                },
+                dateOfbirth: {
+                    date: true
+                }
+            },
+            messages: {
+                username: "Please enter a username between 3-20 characters",
+                firstname: "Please enter your firstname",
+                lastname: "Please enter your lastname",
+                email: "Please enter a valid e-mail address",
+                dateOfbirth: "Please enter a valid birthday",
+                password: {
+                    required: "Please provide a password",
+                    pwcheck: "Password needs to be at least 7 characters including at least 1 number and 1 upper case letter"
+                },
+                passwordRepeated: "Passwords should match"
+            },
+            function(form) {
+                form.submit();
+            }
+        });
+    });
+    $.validator.addMethod("pwcheck",
+        function (value, element) {
+            return /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]){7,}/.test(value);
+        })
+</script>
+</body>
+</html>
+

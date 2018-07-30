@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Error page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script src="/webjars/bootstrap/4.1.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container text-center">
+    <p th:text="${#strings.isEmpty(errorMessage)} ? #{notFound404.message} : ${errorMessage}"></p>
+    <a th:href="@{/}" class="btn btn-success btn-lg" th:text="#{returnToHome.message}"></a>
+</div>
+</body>
+</html>

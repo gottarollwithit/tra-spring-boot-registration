@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="Profile"></title>
+    <link rel="stylesheet" href="webjars/bootstrap/4.1.2/css/bootstrap.min.css">
+    <script src="/webjars/jquery/3.0.0/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/4.1.2/js/bootstrap.min.js"></script>
+</head>
+<div class="container">
+    <fieldset>
+
+        <legend>Profile</legend>
+
+        <div class="form-group">
+            <label for="id" class="col-md-4 control-label">
+                ID
+            </label>
+
+            <div class="col-md-8 form-control-static">
+                <span id="id" th:text="${profile.id}"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="username" class="col-sm-4 control-label">
+                Username
+            </label>
+
+            <div class="col-md-8 form-control-static">
+                <span id="username" th:text="${profile.username}"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="email" class="col-sm-4 control-label">
+                E-mail
+            </label>
+
+            <div class="col-md-8 form-control-static">
+                <span id="email" th:text="${profile.email}"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="firstname" class="col-sm-4 control-label">
+                First Name
+            </label>
+
+            <div class="col-md-8 form-control-static">
+                <span id="firstname" th:text="${profile.firstName}"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="lastName" class="col-sm-4 control-label">
+                Last name
+            </label>
+
+            <div class="col-md-8 form-control-static">
+                <span id="lastName" th:text="${profile.lastName}"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="dateOfBirth" class="col-sm-4 control-label">
+                Date of Birth
+            </label>
+
+            <div class="col-md-8 form-control-static">
+                <p id="dateOfBirth" th:text="${#temporals.format(profile.dateOfBirth,'dd/MM/yyyy')}"></p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <a class="btn btn-danger" href="/logout" th:href="@{/logout}">Log out</a>
+        </div>
+    </fieldset>
+</div>
+</html>
